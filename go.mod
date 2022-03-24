@@ -1,3 +1,3 @@
-module github.com/seh-msft/cfg
+module github.com/henesy/cfg
 
 go 1.18
