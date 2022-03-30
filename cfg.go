@@ -392,8 +392,11 @@ lines:
 
 			case r == '\'':
 				next, _, err := lr.ReadRune()
-				if err == io.EOF && state == squotebegin {
-					return c, errors.New("unclosed single quote (') at EOF")
+				if err == io.EOF {
+					if state == squotebegin {
+						return c, errors.New("unclosed single quote (') at EOF")
+					}
+					break scan 
 				}
 				if err != nil {
 					return c, err
@@ -453,8 +456,11 @@ lines:
 
 			case r == '"':
 				next, _, err := lr.ReadRune()
-				if err == io.EOF && state == dquotebegin {
-					return c, errors.New("unclosed double quote (\") at EOF")
+				if err == io.EOF {
+					if state == dquotebegin {
+						return c, errors.New("unclosed double quote (\") at EOF")
+					}
+					break scan
 				}
 				if err != nil {
 					return c, err
